@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>intercomunicador</title>
+
+  <style>
+    
+  </style>
+
+  
+</head>
+<body>
+  <div id="status" style="font-size: 18px; margin-bottom: 20px;">
+  Verificando sua localização...
+</div>
+<div id="link-container" style="display:none;">
+  <a
+    href="https://wa.me/5595981130470?text=Olá,%20estou%20aqui%20na%20porta"
+    target="_blank"
+    style="font-size: 20px;"
+  >
+    📞 Enviar mensagem pelo WhatsApp
+  </a>
+</div>
+
+<script>
+  const casaLat = 2.863545; // ← substitua pela latitude da sua casa
+  const casaLon = -60.669333; // ← substitua pela longitude da sua casa
+  const maxDist = 0.0005; // Aproximadamente 50 metros
+
+  function distancia(lat1, lon1, lat2, lon2) {
+    return Math.sqrt(Math.pow(lat1 - lat2, 2) + Math.pow(lon1 - lon2, 2));
+  }
+
+  navigator.geolocation.getCurrentPosition(
+    function (position) {
+      const lat = position.coords.latitude;
+      const lon = position.coords.longitude;
+      const dist = distancia(lat, lon, casaLat, casaLon);
+
+      if (dist < maxDist) {
+        document.getElementById("status").innerText = "✅ Você está em frente à casa. Pode me chamar:";
+        document.getElementById("link-container").style.display = "block";
+      } else {
+        document.getElementById("status").innerText = "❌ Este serviço só funciona quando você estiver na porta.";
+      }
+    },
+    function () {
+      document.getElementById("status").innerText = "⚠️ Não foi possível acessar sua localização.";
+    }
+  );
+</script>
+
+
+  <script>
+    
+  </script>
+</body>
+</html>
